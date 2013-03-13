@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
-
 		tabsAdapter = new TabsAdapter(this, viewPager);
 		tabsAdapter.addTab(actionBar.newTab().setText("Apps"), appsListFragment.class, null);
 		tabsAdapter.addTab(actionBar.newTab().setText("Permissions"), PermissionsListFragment.class, null);
