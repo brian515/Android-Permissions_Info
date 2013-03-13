@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/sort"
+          android:title="@string/sortNumPermissions"
+          android:showAsAction="never"
+          android:visible="true"
+          android:enabled="true"/>
+
+    <item android:id="@+id/showHideSystemApps"
+          android:title="@string/hideSystemApps"
+          android:showAsAction="never"
+          android:visible="true"
+          android:enabled="true"/>
+
+</menu>

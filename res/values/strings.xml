@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PermissionChecker</string>
+    <string name="sortName">Sort by name</string>
+    <string name="sortNumPermissions">Sort by number of permissions</string>
+    <string name="hideSystemApps">Hide system apps</string>
+    <string name="showSystemApps">Show system apps</string>
+    <string name="permission">permission</string>
+    <string name="permissions">permissions</string>
+    <string name="no_permissions_required">This app requires no special permissions to run</string>
+    <string name="no_permission_info">No information about this permission is available</string>
+</resources>
