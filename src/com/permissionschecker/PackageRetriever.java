@@ -7,16 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/6/13
- * Time: 5:22 PM
- * To change this template use File | Settings | File Templates.
- */
 public class PackageRetriever {
 
-	private ArrayList<App> appList;
 	private Context context;
 
 	public PackageRetriever(Context c) {
@@ -24,7 +16,6 @@ public class PackageRetriever {
 		 * Construct a new {@link PackageRetriever} object with {@link Context} object
 		 */
 		this.context = c;
-		appList = new ArrayList<App>();
 	}
 
 	public ArrayList<App> getAllApps() {

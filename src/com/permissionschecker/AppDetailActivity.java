@@ -15,13 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/7/13
- * Time: 9:11 PM
- * To change this template use File | Settings | File Templates.
- */
 public class AppDetailActivity extends Activity {
 
 	private App app;

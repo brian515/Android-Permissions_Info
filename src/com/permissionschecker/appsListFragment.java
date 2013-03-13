@@ -13,15 +13,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/7/13
- * Time: 3:18 PM
- * To change this template use File | Settings | File Templates.
- */
-public class appsListFragment extends ListFragment {
+public class AppsListFragment extends ListFragment {
 
+    private MainActivity dataSource;
 	private ArrayList<App> appArrayList;
 	private SortOrder sortOrder;
 	private VisibleApps visibleApps;
@@ -43,9 +37,10 @@ public class appsListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        dataSource = (MainActivity)getActivity();
 		setHasOptionsMenu(true);
-		loadData();
-	}
+        loadInitialData();
+    }
 
 	@Override
 	public void onResume() {
@@ -97,11 +92,11 @@ public class appsListFragment extends ListFragment {
 				return true;
 			case R.id.showHideSystemApps:
 				if (visibleApps == VisibleApps.ALL) {
-					appArrayList = new PackageRetriever(getActivity()).getUserInstalledApps();
-					visibleApps = VisibleApps.USER_INSTALLED;
+                    getOnlyUserInstalledApps();
+   					visibleApps = VisibleApps.USER_INSTALLED;
 				}
 				else if (visibleApps == VisibleApps.USER_INSTALLED) {
-					appArrayList = new PackageRetriever(getActivity()).getAllApps();
+					getAllApps();
 					visibleApps = VisibleApps.ALL;
 				}
 				updateMenuTitles();
@@ -127,13 +122,30 @@ public class appsListFragment extends ListFragment {
 			sortItem.setTitle(R.string.sortNumPermissions);
 	}
 
-	private void loadData() {
-		PackageRetriever retriever = new PackageRetriever(getActivity());
+	private void loadInitialData() {
 		visibleApps = VisibleApps.USER_INSTALLED;
 		sortOrder = SortOrder.NUM_PERMISSIONS;
-		appArrayList = retriever.getUserInstalledApps();
+        getAllApps();
+        getOnlyUserInstalledApps();
+
+		//appArrayList = retriever.getUserInstalledApps();
 		sort(SortOrder.NUM_PERMISSIONS);
 	}
+
+    private void getAllApps() {
+        // copy appArrayList from the activity so that we can modify it without messing with the
+        // other views
+        appArrayList = new ArrayList<App>();
+        appArrayList.addAll(dataSource.appArrayList);
+    }
+
+    private void getOnlyUserInstalledApps() {
+        this.appArrayList.clear();
+        for (App a : dataSource.appArrayList) {
+            if (!a.isSystemApp)
+                this.appArrayList.add(a);
+        }
+    }
 
 	private void sort(SortOrder s) {
 		switch (s) {
@@ -200,6 +212,6 @@ public class appsListFragment extends ListFragment {
 		TextView txAppName;
 		TextView txAppNumberPermissions;
 		ImageView ivAppIcon;
-	}
+    }
 
 }

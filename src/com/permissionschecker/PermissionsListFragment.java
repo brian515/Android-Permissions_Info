@@ -7,13 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-/**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/7/13
- * Time: 3:18 PM
- * To change this template use File | Settings | File Templates.
- */
 public class PermissionsListFragment extends ListFragment {
 
 	@Override

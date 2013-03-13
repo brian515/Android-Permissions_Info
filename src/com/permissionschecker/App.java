@@ -2,15 +2,6 @@ package com.permissionschecker;
 
 import android.graphics.drawable.Drawable;
 
-
-/**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/6/13
- * Time: 5:25 PM
- * To change this template use File | Settings | File Templates.
- */
-
 public class App {
 
 	private String packageName;
