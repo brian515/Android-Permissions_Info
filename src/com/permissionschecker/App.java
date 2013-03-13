@@ -1,26 +1,76 @@
 package com.permissionschecker;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class App {
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+
+public class App implements Parcelable {
 
 	private String packageName;
 	private String appName;
     private String[] permissionsList;
     private String[] permissionsListShortName;
-	private Drawable icon;
+    private byte[] iconBytes;
     public boolean isSystemApp;
 
-	public App() {
+    public App() {
 
+    }
+
+	public App(Parcel in) {
+        packageName = in.readString();
+        appName = in.readString();
+        in.readStringArray(permissionsList);
+        in.readStringArray(permissionsListShortName);
+        in.readByteArray(iconBytes);
+        isSystemApp = in.readByte() == 1;
 	}
 
-	public Drawable getIcon() {
-		return icon;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(packageName);
+        parcel.writeString(appName);
+        parcel.writeStringArray(permissionsList);
+        parcel.writeStringArray(permissionsListShortName);
+        parcel.writeByteArray(iconBytes);
+        parcel.writeByte((byte) (isSystemApp ? 1 : 0));
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+
+        @Override
+        public Object createFromParcel(Parcel parcel) {
+            return new App(parcel);
+        }
+
+        @Override
+        public Object[] newArray(int i) {
+            return new App[i];
+        }
+    };
+
+	public BitmapDrawable getIcon(Context c) {
+        Bitmap bmp = BitmapFactory.decodeByteArray(iconBytes, 0, iconBytes.length);
+        return new BitmapDrawable(c.getResources(), bmp);
 	}
 
-	public void setIcon(Drawable icon) {
-		this.icon = icon;
+	public void setIcon(BitmapDrawable icon) {
+        Bitmap bitmap = icon.getBitmap();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        iconBytes = outputStream.toByteArray();
 	}
 
 	public String getPackageName() {

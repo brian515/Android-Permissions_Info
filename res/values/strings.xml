@@ -9,4 +9,5 @@
     <string name="permissions">permissions</string>
     <string name="no_permissions_required">This app requires no special permissions to run</string>
     <string name="no_permission_info">No information about this permission is available</string>
+    <string name="filter">Filter</string>
 </resources>

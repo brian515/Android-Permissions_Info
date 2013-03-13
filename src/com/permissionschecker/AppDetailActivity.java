@@ -40,7 +40,7 @@ public class AppDetailActivity extends Activity {
 
 	private void setupContent() {
 		ImageView iconImageView = (ImageView)findViewById(R.id.app_detail_icon_imageview);
-		iconImageView.setImageDrawable(app.getIcon());
+		iconImageView.setImageDrawable(app.getIcon(this));
 
 		TextView nameTextView = (TextView)findViewById(R.id.app_detail_name_textview);
 		nameTextView.setText(app.getAppName());

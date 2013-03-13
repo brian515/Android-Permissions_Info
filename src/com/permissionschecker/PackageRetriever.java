@@ -2,6 +2,7 @@ package com.permissionschecker;
 
 import android.content.Context;
 import android.content.pm.*;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PackageRetriever {
 			}
 			App a = new App();
 			a.setAppName(info.loadLabel(context.getPackageManager()).toString());
-			a.setIcon(info.loadIcon(context.getPackageManager()));
+			a.setIcon((BitmapDrawable)info.loadIcon(context.getPackageManager()));
 			a.setPackageName(info.packageName);
 			a.setPermissionsList(packageInfo.requestedPermissions);
 

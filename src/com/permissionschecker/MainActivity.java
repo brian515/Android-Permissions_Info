@@ -2,8 +2,11 @@ package com.permissionschecker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -30,7 +33,9 @@ public class MainActivity extends Activity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 		tabsAdapter = new TabsAdapter(this, viewPager);
-		tabsAdapter.addTab(actionBar.newTab().setText("Apps"), AppsListFragment.class, null);
+        Bundle appsArgs = new Bundle();
+        appsArgs.putParcelableArrayList("data", appArrayList);
+		tabsAdapter.addTab(actionBar.newTab().setText("Apps"), AppsListFragment.class, appsArgs);
 		tabsAdapter.addTab(actionBar.newTab().setText("Permissions"), PermissionsListFragment.class, null);
 
 		if (savedInstanceState != null)

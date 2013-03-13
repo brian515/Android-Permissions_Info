@@ -15,8 +15,8 @@ import java.util.Collections;
 
 public class AppsListFragment extends ListFragment {
 
-    private MainActivity dataSource;
 	private ArrayList<App> appArrayList;
+    private ArrayList<App> origAppArrayList;
 	private SortOrder sortOrder;
 	private VisibleApps visibleApps;
 	Menu menu;
@@ -37,8 +37,11 @@ public class AppsListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        dataSource = (MainActivity)getActivity();
 		setHasOptionsMenu(true);
+
+        Bundle args = getArguments();
+        origAppArrayList = args.getParcelableArrayList("data");
+
         loadInitialData();
     }
 
@@ -58,7 +61,7 @@ public class AppsListFragment extends ListFragment {
 				detailIntent.putExtra("permissions", a.getPermissionsList());
                 detailIntent.putExtra("permissionsshort", a.getPermissionsListShortName());
 
-				Bitmap bitmap = ((BitmapDrawable)a.getIcon()).getBitmap();
+				Bitmap bitmap = a.getIcon(getActivity()).getBitmap();
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 				byte[] b = outputStream.toByteArray();
@@ -135,13 +138,14 @@ public class AppsListFragment extends ListFragment {
     private void getAllApps() {
         // copy appArrayList from the activity so that we can modify it without messing with the
         // other views
+        appArrayList = null;
         appArrayList = new ArrayList<App>();
-        appArrayList.addAll(dataSource.appArrayList);
+        appArrayList.addAll(origAppArrayList);
     }
 
     private void getOnlyUserInstalledApps() {
-        this.appArrayList.clear();
-        for (App a : dataSource.appArrayList) {
+        appArrayList.clear();
+        for (App a : origAppArrayList) {
             if (!a.isSystemApp)
                 this.appArrayList.add(a);
         }
@@ -193,7 +197,7 @@ public class AppsListFragment extends ListFragment {
 			}
 
 			final App a = getItem(position);
-			viewHolder.ivAppIcon.setImageDrawable(a.getIcon());
+			viewHolder.ivAppIcon.setImageDrawable(a.getIcon(getActivity()));
 			viewHolder.txAppName.setText(a.getAppName());
 			int permissionsCount = 0;
 			if (a.getPermissionsList() != null)
