@@ -2,8 +2,6 @@ package com.permissionschecker;
 
 import android.graphics.drawable.Drawable;
 
-import java.io.Serializable;
-
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +18,7 @@ public class App {
     private String[] permissionsList;
     private String[] permissionsListShortName;
 	private Drawable icon;
+    public boolean isSystemApp;
 
 	public App() {
 
