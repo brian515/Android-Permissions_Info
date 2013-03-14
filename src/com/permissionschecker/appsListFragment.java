@@ -3,13 +3,10 @@ package com.permissionschecker;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,8 +36,10 @@ public class AppsListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
-        Bundle args = getArguments();
-        origAppArrayList = args.getParcelableArrayList("data");
+        DataSource dataSource = (DataSource)getActivity().getApplication();
+        origAppArrayList = dataSource.getAppsList();
+        //Bundle args = getArguments();
+        //origAppArrayList = args.getParcelableArrayList("data");
 
         loadInitialData();
     }
@@ -49,6 +48,8 @@ public class AppsListFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 
+        getListView().setFastScrollEnabled(true);
+
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new ListView.OnItemClickListener() {
 
@@ -56,16 +57,8 @@ public class AppsListFragment extends ListFragment {
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				Intent detailIntent = new Intent(getActivity(), AppDetailActivity.class);
 				App a = appArrayList.get(i);
-				detailIntent.putExtra("name", a.getAppName());
-				detailIntent.putExtra("package", a.getPackageName());
-				detailIntent.putExtra("permissions", a.getPermissionsList());
-                detailIntent.putExtra("permissionsshort", a.getPermissionsListShortName());
-
-				Bitmap bitmap = a.getIcon(getActivity()).getBitmap();
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-				byte[] b = outputStream.toByteArray();
-				detailIntent.putExtra("icon", b);
+                DataSource dataSource = (DataSource)getActivity().getApplication();
+                dataSource.setAppForDetail(a);
 				startActivity(detailIntent);
 			}
 		});

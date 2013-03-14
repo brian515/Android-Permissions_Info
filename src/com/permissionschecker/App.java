@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -27,9 +28,9 @@ public class App implements Parcelable {
 	public App(Parcel in) {
         packageName = in.readString();
         appName = in.readString();
-        in.readStringArray(permissionsList);
-        in.readStringArray(permissionsListShortName);
-        in.readByteArray(iconBytes);
+        permissionsList = in.createStringArray();
+        permissionsListShortName = in.createStringArray();
+        iconBytes = in.createByteArray();
         isSystemApp = in.readByte() == 1;
 	}
 

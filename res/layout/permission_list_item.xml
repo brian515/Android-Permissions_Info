@@ -3,37 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="75dp">
+              android:layout_height="45dp"
+              android:padding="10dp">
 
-    <ImageView
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:id="@+id/permission_icon_imageview"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scaleType="centerInside"/>
-
-    <LinearLayout
-            android:orientation="horizontal"
+    <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:id="@+id/permission_name_textview"
-                    android:layout_gravity="left|center_vertical"
-                    android:textSize="14sp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:id="@+id/permission_name_textview"
+            android:layout_gravity="left|center_vertical"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:fontFamily="sans-serif-condensed"/>
 
 </LinearLayout>

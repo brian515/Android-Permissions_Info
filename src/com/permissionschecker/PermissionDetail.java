@@ -3,6 +3,8 @@ package com.permissionschecker;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 public class PermissionDetail {
 
     public ArrayList<App> matchingApps;
-    private PermissionInfo permissionInfo;
+    public PermissionInfo permissionInfo;
     public String permissionName;
 
     public PermissionDetail(String _permissionName, Context c) {
@@ -25,11 +27,6 @@ public class PermissionDetail {
         }
 
         this.permissionInfo = pi;
-    }
-
-    public PermissionDetail() {
-        permissionInfo = null;
-        matchingApps = new ArrayList<App>();
     }
 
     public boolean addApp(App a) {

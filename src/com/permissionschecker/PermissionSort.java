@@ -1,9 +1,6 @@
 package com.permissionschecker;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;

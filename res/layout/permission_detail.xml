@@ -12,12 +12,6 @@
             android:padding="5dp"
             android:gravity="center_vertical">
 
-        <ImageView
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:id="@+id/app_detail_icon_imageview"
-                />
-
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
@@ -30,15 +24,16 @@
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:fontFamily="sans-serif-condensed"
-                    android:id="@+id/app_detail_name_textview"
-                    android:textSize="20sp"/>
+                    android:id="@+id/permission_detail_name_textview"
+                    android:textSize="20sp"
+                    android:textColor="#33B5E5"/>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="New Text"
-                    android:id="@+id/app_detail_package_textview"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/permission_description_textview"/>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -46,5 +41,5 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/app_detail_permissions_fragment"/>
+            android:id="@+id/permission_apps_permissions_fragment"/>
 </LinearLayout>

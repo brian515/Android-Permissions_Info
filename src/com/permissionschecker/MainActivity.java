@@ -1,12 +1,8 @@
 package com.permissionschecker;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
+import android.app.*;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -14,7 +10,7 @@ public class MainActivity extends Activity {
 
 	ViewPager viewPager;
 	TabsAdapter tabsAdapter;
-    public ArrayList<App> appArrayList;
+    private App appForDetail;
 
 	/**
 	 * Called when the activity is first created.
@@ -22,8 +18,6 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-        loadData();
 
         setContentView(R.layout.main);
 
@@ -34,19 +28,13 @@ public class MainActivity extends Activity {
 		actionBar.setDisplayShowTitleEnabled(true);
 		tabsAdapter = new TabsAdapter(this, viewPager);
         Bundle appsArgs = new Bundle();
-        appsArgs.putParcelableArrayList("data", appArrayList);
-		tabsAdapter.addTab(actionBar.newTab().setText("Apps"), AppsListFragment.class, appsArgs);
-		tabsAdapter.addTab(actionBar.newTab().setText("Permissions"), PermissionsListFragment.class, null);
+        appsArgs.putBoolean("allApps", true);
+		tabsAdapter.addTab(actionBar.newTab().setText("Apps"), AppsListFragment.class, null);
+		tabsAdapter.addTab(actionBar.newTab().setText("Permissions"), PermissionsListFragment.class, appsArgs);
 
 		if (savedInstanceState != null)
 			actionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
-
 	}
-
-    private void loadData() {
-        PackageRetriever retriever = new PackageRetriever(this);
-        appArrayList = retriever.getAllApps();
-    }
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

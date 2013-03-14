@@ -36,7 +36,7 @@ public class PackageRetriever {
 			a.setAppName(info.loadLabel(context.getPackageManager()).toString());
 			a.setIcon((BitmapDrawable)info.loadIcon(context.getPackageManager()));
 			a.setPackageName(info.packageName);
-			a.setPermissionsList(packageInfo.requestedPermissions);
+			a.setPermissionsList(getSystemPermissions(packageInfo.requestedPermissions));
 
             if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 1) {
                 a.isSystemApp = false;
@@ -50,4 +50,19 @@ public class PackageRetriever {
 
 		return returnList;
 	}
+
+    private String[] getSystemPermissions(String[] allPermissions) {
+        if (allPermissions != null) {
+            ArrayList<String> systemPermissions = new ArrayList<String>();
+            for (String p : allPermissions) {
+                if (p.substring(0,18).equals("android.permission")) {
+                    systemPermissions.add(p);
+                }
+            }
+            String[] returnArray = new String[systemPermissions.size()];
+            return systemPermissions.toArray(returnArray);
+        }
+        else
+            return null;
+    }
 }
