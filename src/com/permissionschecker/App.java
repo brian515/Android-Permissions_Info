@@ -12,6 +12,12 @@ import android.util.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
+/**
+ *
+ * Class that stores the details of an App
+ *
+ */
+
 public class App implements Parcelable {
 
 	private String packageName;
@@ -39,6 +45,7 @@ public class App implements Parcelable {
         return 0;
     }
 
+    // implement parcelable so that this class can be passed through intents. Turns out I didn't need this. Oh well...
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(packageName);

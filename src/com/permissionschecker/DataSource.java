@@ -3,11 +3,7 @@ package com.permissionschecker;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: briancharous
- * Date: 3/14/13
- * Time: 3:06 AM
- * To change this template use File | Settings | File Templates.
+ * interface for a class that can be defined as a data source for the lists
  */
 public interface DataSource {
 

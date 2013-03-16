@@ -19,8 +19,12 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+
+        // set what's displayed by loading from the XML
         setContentView(R.layout.main);
 
+
+        // setup tabs
 		viewPager = (ViewPager)findViewById(R.id.pager);
 
 		ActionBar actionBar = getActionBar();
@@ -38,6 +42,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
+        // save what tab we're on if the activity is killed
 		super.onSaveInstanceState(outState);
 		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
 	}

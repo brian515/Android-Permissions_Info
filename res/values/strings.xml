@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PermissionChecker</string>
+    <string name="app_name">Permissions Explorer</string>
     <string name="sortName">Sort by name</string>
     <string name="sortNumPermissions">Sort by number of permissions</string>
     <string name="hideSystemApps">Hide system apps</string>

@@ -2,6 +2,10 @@ package com.permissionschecker;
 
 import java.util.Comparator;
 
+/**
+ * Class that compares permissions by group so that they can be sorted by group
+ */
+
 public class PermissionGroupComparator implements Comparator<PermissionDetail> {
 
 	@Override

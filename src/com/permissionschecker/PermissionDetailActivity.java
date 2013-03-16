@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+/**
+ * This class isn't ready yet (the class works, but the data isn't), but in theory, it should display a permission's name and description with a list of all
+ * the apps that request that permission
+ */
+
 public class PermissionDetailActivity extends Activity {
 
     private PermissionDetail detail;

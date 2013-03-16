@@ -9,6 +9,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+/**
+ * Class that holds the details of a permission including all the apps that request this permission, it's name, and
+ * a description
+ */
+
 public class PermissionDetail {
 
     public ArrayList<App> matchingApps;

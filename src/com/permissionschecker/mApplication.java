@@ -1,8 +1,11 @@
 package com.permissionschecker;
 
 import android.app.Application;
-
 import java.util.ArrayList;
+
+/**
+ * Class that holds the data for each activity so that it doesn't have to be constantly reloaded
+ */
 
 public class mApplication extends Application implements DataSource {
 

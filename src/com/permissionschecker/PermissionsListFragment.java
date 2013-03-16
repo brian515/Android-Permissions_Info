@@ -1,5 +1,6 @@
 package com.permissionschecker;
 
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +11,15 @@ import android.widget.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class displays a list of permissions sorted by group and then sorted by name within the group
+ */
+
 public class PermissionsListFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // inflate the layout from XML
         return inflater.inflate(R.layout.apps_list_fragment, container, false);
 	}
 
@@ -22,6 +28,7 @@ public class PermissionsListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // get the list of all permissions, then sort them
         PermissionSort sorter = new PermissionSort(getActivity());
         ArrayList<App> appList;
         DataSource dataSource = (DataSource)getActivity().getApplication();
@@ -36,6 +43,7 @@ public class PermissionsListFragment extends ListFragment {
         Collections.sort(permissionsList, new PermissionGroupComparator());
         permissionsList_ = addHeaders(permissionsList);
 
+        // add the permissions to the list
         PermissionsArrayAdapter adapter = new PermissionsArrayAdapter(getActivity());
         setListAdapter(adapter);
         for (PermissionDetail p : permissionsList_)
@@ -43,6 +51,7 @@ public class PermissionsListFragment extends ListFragment {
     }
 
     private ArrayList<PermissionDetail> addHeaders(ArrayList<PermissionDetail> details) {
+        // insert nulls into the list so that we can know where to put the headers in the list
         details.add(0, null);
         for (int i=1; i<details.size()-1; i++) {
             PermissionDetail cur = details.get(i);
@@ -63,6 +72,8 @@ public class PermissionsListFragment extends ListFragment {
     }
 
     private String stripPrefixesFromPermission(String permissionName) {
+        // get only the permission's name
+        // (i.e. if the permission is android.permission.INTERNET, return INTERNET
         String[] components = permissionName.split("\\.");
         String name = components[components.length-1];
         return name.replace("_", " ");
@@ -77,15 +88,28 @@ public class PermissionsListFragment extends ListFragment {
     public void onResume() {
         super.onResume();
         getListView().setFastScrollEnabled(true);
+
+        // setup what happens when an item in the list is clicked
         getListView().setOnItemClickListener(new ListView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                // show a dialog explaining what the permission does
+
+                AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+                dialog.setTitle(permissionsList_.get(i).permissionName);
+                dialog.setMessage(permissionsList_.get(i).permissionInfo.loadDescription(getActivity().getPackageManager()));
+                dialog.show();
+
+                /* This is broken but I don't have time to fix it now, so just show an alert saying what the permission does instead
+
                 DataSource dataSource = (DataSource)getActivity().getApplication();
                 dataSource.setPermissionDetailForDetail(permissionsList_.get(i));
 
                 Intent detailIntent = new Intent(getActivity(), PermissionDetailActivity.class);
                 startActivity(detailIntent);
+                */
             }
         });
     }
@@ -104,15 +128,18 @@ public class PermissionsListFragment extends ListFragment {
             int type = getItemViewType(position);
 
             if (row == null) {
+
+                // if the row is null, inflate the layout
                 LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 if (type == 0) {
-                    // it's a header
+                    // it's a header, inflate a header view
                     row = inflater.inflate(R.layout.list_header, null);
                     headerViewHolder = new HeaderViewHolder();
                     headerViewHolder.txTitle = (TextView)row.findViewById(R.id.header_textview);
                     row.setTag(headerViewHolder);
                 }
                 else {
+                    // it's a "regular" row, so inflate that layout
                     row = inflater.inflate(R.layout.permission_list_item, null);
                     detailViewHolder = new PermissionDetailViewHolder();
                     detailViewHolder.txName = (TextView)row.findViewById(R.id.permission_name_textview);
@@ -128,6 +155,8 @@ public class PermissionsListFragment extends ListFragment {
                 }
             }
 
+
+            // set the data in the list
             final PermissionDetail p = getItem(position);
             if (type == 0) {
                 String headerTitle = "";

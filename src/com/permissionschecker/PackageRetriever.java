@@ -8,18 +8,24 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that loads all apps installed on the system
+ */
+
 public class PackageRetriever {
 
 	private Context context;
 
 	public PackageRetriever(Context c) {
-		/**
-		 * Construct a new {@link PackageRetriever} object with {@link Context} object
-		 */
-		this.context = c;
+
+		 //Construct a new PackageRetriever object with Context object
+
+		 this.context = c;
 	}
 
 	public ArrayList<App> getAllApps() {
+        // get all apps installed
+
 		final List<ApplicationInfo> packageList = context.getPackageManager().getInstalledApplications(0);
 
 		ArrayList<App> returnList = new ArrayList<App>();
@@ -52,6 +58,8 @@ public class PackageRetriever {
 	}
 
     private String[] getSystemPermissions(String[] allPermissions) {
+        // remove all permissions that are not system level (i.e. apps can define their own permissions
+        // and most of the time these are for things like Google Cloud Messaging and these aren't really relevant)
         if (allPermissions != null) {
             ArrayList<String> systemPermissions = new ArrayList<String>();
             for (String p : allPermissions) {

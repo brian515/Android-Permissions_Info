@@ -2,6 +2,10 @@ package com.permissionschecker;
 
 import java.util.Comparator;
 
+/**
+ * Implement Comparator so that apps can be sorted by number of permissions
+ */
+
 public class AppPermissionsComparator implements Comparator<App> {
 
 	@Override

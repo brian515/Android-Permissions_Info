@@ -10,6 +10,10 @@ import android.widget.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Fragment that displays a list of apps and is sortable by app name and number of permissions that it requests
+ */
+
 public class AppsListFragment extends ListFragment {
 
 	private ArrayList<App> appArrayList;
@@ -28,6 +32,7 @@ public class AppsListFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // inflate the layout
 		return inflater.inflate(R.layout.apps_list_fragment, container, false);
 	}
 
@@ -38,8 +43,6 @@ public class AppsListFragment extends ListFragment {
 
         DataSource dataSource = (DataSource)getActivity().getApplication();
         origAppArrayList = dataSource.getAppsList();
-        //Bundle args = getArguments();
-        //origAppArrayList = args.getParcelableArrayList("data");
 
         loadInitialData();
     }
@@ -50,6 +53,8 @@ public class AppsListFragment extends ListFragment {
 
         getListView().setFastScrollEnabled(true);
 
+
+        // set what happens when an item in the is clicked
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new ListView.OnItemClickListener() {
 
@@ -73,6 +78,7 @@ public class AppsListFragment extends ListFragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+        // setup what happens when menu items are clicked
 		switch (item.getItemId()) {
 			case R.id.sort:
 				if (sortOrder == SortOrder.NAME) {
@@ -105,6 +111,7 @@ public class AppsListFragment extends ListFragment {
 	}
 
 	private void updateMenuTitles() {
+        // set menu titles since the menu can change based on how the list is sorted
 		MenuItem showHideSystemAppsItem = menu.findItem(R.id.showHideSystemApps);
 		if (visibleApps == VisibleApps.USER_INSTALLED)
 			showHideSystemAppsItem.setTitle(R.string.showSystemApps);
@@ -119,12 +126,11 @@ public class AppsListFragment extends ListFragment {
 	}
 
 	private void loadInitialData() {
+        // show only user installed apps sorted by number of permissions
 		visibleApps = VisibleApps.USER_INSTALLED;
 		sortOrder = SortOrder.NUM_PERMISSIONS;
         getAllApps();
         getOnlyUserInstalledApps();
-
-		//appArrayList = retriever.getUserInstalledApps();
 		sort(SortOrder.NUM_PERMISSIONS);
 	}
 
@@ -137,6 +143,7 @@ public class AppsListFragment extends ListFragment {
     }
 
     private void getOnlyUserInstalledApps() {
+        // remove system appsf rom the list
         appArrayList.clear();
         for (App a : origAppArrayList) {
             if (!a.isSystemApp)
@@ -145,6 +152,7 @@ public class AppsListFragment extends ListFragment {
     }
 
 	private void sort(SortOrder s) {
+        // sort the list by the correct sort order
 		switch (s) {
 			case NAME:
 				Collections.sort(appArrayList, new AppNameComparator());
@@ -159,6 +167,7 @@ public class AppsListFragment extends ListFragment {
 	}
 
 	private void reloadArrayAdapter() {
+        // after the data is changed, reload the list
 		AppsArrayAdapter adapter = new AppsArrayAdapter(getActivity());
 		setListAdapter(adapter);
 		for (App a : appArrayList)
@@ -166,6 +175,7 @@ public class AppsListFragment extends ListFragment {
 	}
 
 	private class AppsArrayAdapter extends ArrayAdapter<App> {
+        // setup and draw the list
 
 		public AppsArrayAdapter(Context context) {
 			super(context, R.layout.app_list_item);
@@ -177,6 +187,7 @@ public class AppsListFragment extends ListFragment {
 			AppViewHolder viewHolder = null;
 
 			if (row == null) {
+                // if the row hasn't been created yet, inflate a layout and setup a view holder
 				LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(R.layout.app_list_item, null);
 				viewHolder = new AppViewHolder();
@@ -189,6 +200,7 @@ public class AppsListFragment extends ListFragment {
 				viewHolder = (AppViewHolder)row.getTag();
 			}
 
+            // display the correct information the data in the row
 			final App a = getItem(position);
 			viewHolder.ivAppIcon.setImageDrawable(a.getIcon(getActivity()));
 			viewHolder.txAppName.setText(a.getAppName());

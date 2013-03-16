@@ -5,6 +5,10 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class takes a list of permissions groups them, then sorts them alphabetically
+ */
+
 public class PermissionSort {
 
     private Context mContext;
